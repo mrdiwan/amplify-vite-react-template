@@ -25,7 +25,7 @@ function App() {
   return (
     <main>
       <h1>{user?.signInDetails?.loginId}'s todos</h1>
-      <button onClick={createTodo}>+ new</button>
+      <button onClick={createTodo}>Add Ticker</button>
       <ul>
         {todos.map((todo) => (
           <li
