@@ -5,22 +5,22 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const client = generateClient<Schema>();
 
-//Todo is the table that houses the Todos, column is contnt
+//Todo is the table
 function App() {
-  const [todos, setTodos] = useState<Array<Schema["StockAlertTable"]["type"]>>([]);
+  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
   const { user, signOut } = useAuthenticator();
   useEffect(() => {
-    client.models.StockAlertTable.observeQuery().subscribe({
+    client.models.Todo.observeQuery().subscribe({
       next: (data) => setTodos([...data.items]),
     });
   }, []);
 
   function createTodo() {
-    client.models.StockAlertTable.create({ content: window.prompt("Add Ticker") });
+    client.models.Todo.create({ content: window.prompt("Add Ticker") });
   }
 
   function deleteTodo(id: string) {
-    client.models.StockAlertTable.delete({ id })
+    client.models.Todo.delete({ id })
   }
 
   return (
