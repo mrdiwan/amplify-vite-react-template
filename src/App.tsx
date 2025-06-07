@@ -5,38 +5,38 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const client = generateClient<Schema>();
 
-//Todo is the table
+
 function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+  const [Tickers, setTickers] = useState<Array<Schema["Ticker"]["type"]>>([]);
   const { user, signOut } = useAuthenticator();
   useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
+    client.models.Ticker.observeQuery().subscribe({
+      next: (data) => setTickers([...data.items]),
     });
   }, []);
 
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Add Ticker") });
+  function createTicker() {
+    client.models.Ticker.create({ content: window.prompt("Add Ticker") });
   }
 
-  function deleteTodo(id: string) {
-    client.models.Todo.delete({ id })
+  function deleteTicker(id: string) {
+    client.models.Ticker.delete({ id })
   }
 
   return (
     <main>
-      <h1>{user?.signInDetails?.loginId}'s todos</h1>
-      <button onClick={createTodo}>Enter Stock Ticker</button>
+      <h1>{user?.signInDetails?.loginId}'s Tickers</h1>
+      <button onClick={createTicker}>Enter Stock Ticker</button>
       <ul>
-        {todos.map((todo) => (
+        {Tickers.map((Ticker) => (
           <li
-          onClick={() => deleteTodo(todo.id)}
-          key={todo.id}>{todo.content}
+          onClick={() => deleteTicker(Ticker.id)}
+          key={Ticker.id}>{Ticker.content}
           </li>
         ))}
       </ul>
       <div>
-        🥳 App successfully hosted. Try creating a new todo.
+        🥳 App successfully hosted. Try creating a new Ticker.
         <br />
         <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
           Review next step of this tutorial.
