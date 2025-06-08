@@ -10,6 +10,7 @@ const schema = a.schema({
   Ticker: a
     .model({
       content: a.string(),
+      frequency: a.float(),
     }).authorization((allow) => [allow.owner()]),
 });
 
