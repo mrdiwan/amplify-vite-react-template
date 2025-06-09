@@ -9,14 +9,26 @@ const client = generateClient<Schema>();
 function App() {
   const [Tickers, setTickers] = useState<Array<Schema["Ticker"]["type"]>>([]);
   const { user, signOut } = useAuthenticator();
+
   useEffect(() => {
-    client.models.Ticker.observeQuery().subscribe({
+    const subscription = client.models.Ticker.observeQuery().subscribe({
       next: (data) => setTickers([...data.items]),
     });
+    return () => subscription.unsubscribe();
   }, []);
 
   function createTicker() {
-    client.models.Ticker.create({ content: window.prompt("Add Ticker") });
+    const content = window.prompt("Enter Stock Ticker Symbol:");
+    if (!content) return;
+
+    const freqInput = window.prompt("Enter Frequency in Hours (e.g., 1.00):");
+    const frequency = parseFloat(freqInput || "");
+    if (isNaN(frequency) || frequency <= 0) {
+      alert("Invalid frequency. Please enter a positive number.");
+      return;
+    }
+
+    client.models.Ticker.create({ content: content.toUpperCase(), frequency });
   }
 
   function deleteTicker(id: string) {
@@ -29,9 +41,8 @@ function App() {
       <button onClick={createTicker}>Enter Stock Ticker</button>
       <ul>
         {Tickers.map((Ticker) => (
-          <li
-          onClick={() => deleteTicker(Ticker.id)}
-          key={Ticker.id}>{Ticker.content}
+          <li onClick={() => deleteTicker(Ticker.id)} key={Ticker.id}>
+            {Ticker.content} — every {Ticker.frequency}h
           </li>
         ))}
       </ul>
