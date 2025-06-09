@@ -42,7 +42,7 @@ function App() {
       <ul>
         {Tickers.map((Ticker) => (
           <li onClick={() => deleteTicker(Ticker.id)} key={Ticker.id}>
-            {Ticker.content} — every {Ticker.frequency}h
+            {Ticker.content} - Every {Ticker.frequency}
           </li>
         ))}
       </ul>
