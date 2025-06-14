@@ -22,13 +22,12 @@ function App() {
     if (!content) return;
 
     const freqInput = window.prompt("Enter Frequency in Hours (e.g., 1.00):");
-    const frequency = parseFloat(freqInput || "");
+    const frequency = parseInt(freqInput || "");
     if (isNaN(frequency) || frequency <= 0) {
       alert("Invalid frequency. Please enter a positive number.");
     return;
     }
-
-    client.models.Ticker.create({ content: content.toUpperCase(), frequency });
+    client.models.Ticker.create({ content: content.toUpperCase(), frequency});
   }
 
   function deleteTicker(id: string) {
@@ -42,7 +41,7 @@ function App() {
       <ul>
         {Tickers.map((Ticker) => (
           <li onClick={() => deleteTicker(Ticker.id)} key={Ticker.id}>
-            {Ticker.content} - Every {Ticker.frequency}
+            {Ticker.content} - Every {Ticker.frequency ?? "Not set"}
           </li>
         ))}
       </ul>
