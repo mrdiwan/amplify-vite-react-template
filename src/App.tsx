@@ -25,7 +25,7 @@ function App() {
     const frequency = parseFloat(freqInput || "");
     if (isNaN(frequency) || frequency <= 0) {
       alert("Invalid frequency. Please enter a positive number.");
-      return;
+    return;
     }
 
     client.models.Ticker.create({ content: content.toUpperCase(), frequency });
