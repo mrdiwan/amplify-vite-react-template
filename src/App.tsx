@@ -22,7 +22,8 @@ function App() {
     if (!content) return;
 
     const freqInput = window.prompt("Enter Frequency in Hours (e.g., 1.00):");
-    const frequency = parseInt(freqInput || "");
+    const frequency = parseFloat(freqInput || "");
+    alert(frequency)
     if (isNaN(frequency) || frequency <= 0) {
       alert("Invalid frequency. Please enter a positive number.");
     return;
